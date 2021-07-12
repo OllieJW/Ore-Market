@@ -1,0 +1,22 @@
+# Cost = Initial cost of ore. (0% change)
+# Value = Current cost of ore. (With % change)
+# When adding a new ore make the cost and value to same
+
+prefix: '&bOreMarket '
+
+valueupdates:
+  # Time (in minutes) to send this message
+  time: 5
+  # The below will look like: (These values are just examples)
+  # "Diamond is now valued at $500 ($250 / 200% change from the original $250). 100 left in stock!"
+  format: >
+    [name] is now valued at $[value] ($[change] / [percent]% change from the original [cost]). [stock] left in stock!
+
+# Tax (%) is added to every purchase and sale
+tax: 10
+
+# Multiplier (%) amount ore value changes. (Example: If it is 5 multiplier, Value would go from $1000 -> $1050 if sold, or $1000 -> $950 if bought)
+# Depending on the popularity of your server, you may want to lower this
+# Default: 0.01 (RECOMMENDED)
+multiplier: 0.01
+

@@ -1,0 +1,67 @@
+# Example Item
+#0:
+#  # Item to be shown in the GUI and given/taken
+#  item: DIAMOND
+#  # Item name (Buying this ore will not give the user an ore with this name!)
+#  name: '&bDiamond Ore'
+#  # Lore (Infinite lines). Find the placeholders here -> https://github.com/OllieJW/Ore-Market/wiki/Placeholders
+#  lore:
+#    - '&aValue: $[value]'
+#    - '&aOriginal: $[cost]'
+#    - '&aStock: [stock]'
+#    - '&aChange: [percent]%'
+#    - '&7Right-Click to buy'
+#    - '&7Left-Click to sell'
+#  # Starting cost of ore
+#  cost: 1000
+#  # Current cost of ore (Changing this will edit the GUI value)
+#  value: 1000
+#  # Stock of the ore (Set to -1 for infinite)
+#  stock: 100
+
+
+gui:
+  title: '&6OreMarket'
+  rows: 3
+
+items:
+  0:
+    item: DIAMOND
+    name: '&bDiamond Ore'
+    lore:
+      - '&aValue: $[value]'
+      - '&aOriginal: $[cost]'
+      - '&aStock: [stock]'
+      - '&aChange: [percent]%'
+      - '&7Right-Click to buy'
+      - '&7Left-Click to sell'
+    cost: 1000
+    value: 1000
+    stock: 100
+  1:
+    item: GOLD_INGOT
+    name: '&6Gold Ingot'
+    lore:
+      - '&aValue: $[value]'
+      - '&aOriginal: $[cost]'
+      - '&aStock: [stock]'
+      - '&aChange: [percent]%'
+      - '&7Right-Click to buy'
+      - '&7Left-Click to sell'
+    cost: 500
+    value: 500
+    stock: 100
+
+  2:
+    item: IRON_INGOT
+    name: '&7Iron Ore'
+    lore:
+      - '&aValue: $[value]'
+      - '&aOriginal: $[cost]'
+      - '&aStock: [stock]'
+      - '&aChange: [percent]%'
+      - '&7Right-Click to buy'
+      - '&7Left-Click to sell'
+    cost: 250
+    value: 250
+    stock: 100
