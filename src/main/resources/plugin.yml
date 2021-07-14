@@ -13,3 +13,9 @@ commands:
   om-reload:
     description: Reloads OreMarket
     usage: /<command>
+  om-stats:
+    description: Shows OreMarket stats
+    usage: /<command>
+  om-crash:
+    description: Crashes Market
+    usage: /<command>

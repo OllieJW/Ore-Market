@@ -1,7 +1,7 @@
 package com.olliejw.oremarket.Listeners;
 
 import com.olliejw.oremarket.OreMarket;
-import org.bukkit.Bukkit;
+import com.olliejw.oremarket.Utils.Stats;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -69,6 +69,8 @@ public class InventoryEvents implements Listener {
             double value = OreMarket.main().getGuiConfig().getDouble("items." + event.getSlot() + ".value"); // Ore Value
             int stock = OreMarket.main().getGuiConfig().getInt("items." + event.getSlot() + ".stock"); // Ore stock
             String itemConfig = OreMarket.main().getGuiConfig().getString("items." + event.getSlot() + ".item"); // Config location of item
+            boolean close = OreMarket.main().getGuiConfig().getBoolean("items." + event.getSlot() + ".close");
+
             assert itemConfig != null;
             ItemStack clickedItem = new ItemStack(Objects.requireNonNull(Material.matchMaterial(itemConfig))); // Item that user clicked
 
@@ -89,6 +91,9 @@ public class InventoryEvents implements Listener {
                         stockChange(event.getSlot(), stock, 1, false);
                     }
                 }
+            }
+            if (close) {
+                player.closeInventory();
             }
         }
     }

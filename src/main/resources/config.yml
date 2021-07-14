@@ -10,7 +10,7 @@ valueupdates:
   # The below will look like: (These values are just examples)
   # "Diamond is now valued at $500 ($250 / 200% change from the original $250). 100 left in stock!"
   format: >
-    [name] is now valued at $[value] ($[change] / [percent]% change from the original [cost]). [stock] left in stock!
+    [name] is now valued at $[value] ($[change] / [percent]% change from the original $[cost]). [stock] left in stock!
 
 # Tax (%) is added to every purchase and sale
 tax: 10
@@ -19,4 +19,14 @@ tax: 10
 # Depending on the popularity of your server, you may want to lower this
 # Default: 0.01 (RECOMMENDED)
 multiplier: 0.01
+
+# Market Crash is an event that completely kills the values of ores just like real life.
+# As this is experimental I recommend that you do not enable this with a server full of people
+marketcrash:
+  enabled: false
+  time: 8 # Hours
+  amount: 80 # Amount (%) the values of ores will decrease
+  message: >
+    &4&lMARKET CRASH! ORE VALUES DECREASED BY UP TO [amount]%
+
 

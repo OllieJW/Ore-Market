@@ -1,27 +1,7 @@
-# Example Item
-#0:
-#  # Item to be shown in the GUI and given/taken
-#  item: DIAMOND
-#  # Item name (Buying this ore will not give the user an ore with this name!)
-#  name: '&bDiamond Ore'
-#  # Lore (Infinite lines). Find the placeholders here -> https://github.com/OllieJW/Ore-Market/wiki/Placeholders
-#  lore:
-#    - '&aValue: $[value]'
-#    - '&aOriginal: $[cost]'
-#    - '&aStock: [stock]'
-#    - '&aChange: [percent]%'
-#    - '&7Right-Click to buy'
-#    - '&7Left-Click to sell'
-#  # Starting cost of ore
-#  cost: 1000
-#  # Current cost of ore (Changing this will edit the GUI value)
-#  value: 1000
-#  # Stock of the ore (Set to -1 for infinite)
-#  stock: 100
-
+# Customise the GUI here! View the GitHub wiki to utilise all of OreMarkets features
 
 gui:
-  title: '&6OreMarket'
+  title: '&4OreMarket'
   rows: 3
 
 items:
@@ -65,3 +45,18 @@ items:
     cost: 250
     value: 250
     stock: 100
+
+  5:
+    item: BARRIER
+    name: '&cClose'
+    lore:
+      - '&cClose GUI'
+    close: true
+    hide: true
+
+  6:
+    item: PAPER
+    name: '&aBalance'
+    lore:
+      - '&a$[balance]'
+    hide: true
