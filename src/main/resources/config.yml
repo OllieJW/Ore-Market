@@ -4,7 +4,7 @@
 
 prefix: '&bOreMarket '
 
-valueupdates:
+valuemessage:
   # Time (in minutes) to send this message
   time: 5
   # The below will look like: (These values are just examples)
@@ -24,7 +24,7 @@ multiplier: 0.01
 # As this is experimental I recommend that you do not enable this with a server full of people
 marketcrash:
   enabled: false
-  time: 8 # Hours
+  time: 8 # Hours to repeat
   amount: 80 # Amount (%) the values of ores will decrease
   message: >
     &4&lMARKET CRASH! ORE VALUES DECREASED BY UP TO [amount]%

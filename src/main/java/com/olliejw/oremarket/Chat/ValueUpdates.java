@@ -1,7 +1,7 @@
 package com.olliejw.oremarket.Chat;
 
 import com.olliejw.oremarket.OreMarket;
-import com.olliejw.oremarket.Utils.PlaceHolders;
+import com.olliejw.oremarket.Utils.Placeholders;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -9,13 +9,13 @@ import org.bukkit.entity.Player;
 import java.util.Objects;
 
 public class ValueUpdates {
-    PlaceHolders plh = new PlaceHolders();
+    Placeholders plh = new Placeholders();
 
     public void announceValue() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(OreMarket.main(), () -> {
             for (String key : Objects.requireNonNull(OreMarket.main().getGuiConfig().getConfigurationSection("items")).getKeys(false)) {
                 ConfigurationSection keySection = Objects.requireNonNull(OreMarket.main().getGuiConfig().getConfigurationSection("items")).getConfigurationSection(key);
-                String message = OreMarket.main().getConfig().getString("valueupdates.format");
+                String message = OreMarket.main().getConfig().getString("valuemessage.format");
 
                 assert keySection != null;
                 assert message != null;
@@ -28,6 +28,6 @@ public class ValueUpdates {
                 }
             }
 
-        }, 0L, (OreMarket.main().getConfig().getInt("valueupdates.time")* 20L*60));
+        }, 0L, (OreMarket.main().getConfig().getInt("valuemessage.time")* 20L*60));
     }
 }

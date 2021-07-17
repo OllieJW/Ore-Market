@@ -51,7 +51,8 @@ items:
     name: '&cClose'
     lore:
       - '&cClose GUI'
-    close: true
+    commands:
+      - '[close]'
     hide: true
 
   6:
@@ -59,4 +60,6 @@ items:
     name: '&aBalance'
     lore:
       - '&a$[balance]'
+    commands:
+      - '[msg] Your balance: [balance]'
     hide: true

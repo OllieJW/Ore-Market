@@ -12,19 +12,26 @@ import java.util.Objects;
 
 public class MarketCrash implements Listener {
     public void forceCrash() {
+        // Notification
         String notification = OreMarket.main().getConfig().getString("marketcrash.message");
         for (Player player: Bukkit.getOnlinePlayers()) {
             assert notification != null;
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', notification).replace("[amount]", Objects.requireNonNull(OreMarket.main().getConfig().getString("marketcrash.amount"))));
+            String message = ChatColor.translateAlternateColorCodes('&', notification).replace("[amount]", Objects.requireNonNull(OreMarket.main().getConfig().getString("marketcrash.amount")));
+            player.sendMessage(message);
+
             player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 10.0F, 1);
         }
+
+        // Change value
         for (String key : Objects.requireNonNull(OreMarket.main().getGuiConfig().getConfigurationSection("items")).getKeys(false)) {
             ConfigurationSection keySection = Objects.requireNonNull(OreMarket.main().getGuiConfig().getConfigurationSection("items")).getConfigurationSection(key);
             assert keySection != null;
-            double value = keySection.getDouble("value");
-            double amount = OreMarket.main().getConfig().getDouble("marketcrash.amount");
-            keySection.set("value", (value*(1-(amount/100))));
-            OreMarket.main().saveGuiConfig();
+            if(keySection.getDouble("value") > 0) {
+                double value = keySection.getDouble("value");
+                double amount = OreMarket.main().getConfig().getDouble("marketcrash.amount");
+                keySection.set("value", (value * (1 - (amount / 100))));
+                OreMarket.main().saveGuiConfig();
+            }
         }
     }
 

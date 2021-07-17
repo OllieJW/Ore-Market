@@ -3,6 +3,7 @@ version: ${project.version}
 main: com.olliejw.oremarket.OreMarket
 api-version: 1.16
 depend: [ Vault ]
+softdepend: [ PlaceholderAPI ]
 authors: [ OllieJW ]
 description: Realistic stock market for ores
 

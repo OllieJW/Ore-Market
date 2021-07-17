@@ -1,4 +1,5 @@
 package com.olliejw.oremarket;
+
 import com.olliejw.oremarket.Chat.ValueUpdates;
 import com.olliejw.oremarket.Commands.CrashMarket;
 import com.olliejw.oremarket.Commands.OpenMarket;
@@ -6,9 +7,9 @@ import com.olliejw.oremarket.Commands.Reload;
 import com.olliejw.oremarket.Commands.StatsCommands;
 import com.olliejw.oremarket.Events.MarketCrash;
 import com.olliejw.oremarket.Listeners.InventoryEvents;
+import com.olliejw.oremarket.Utils.Placeholders;
 import com.olliejw.oremarket.Utils.Stats;
-import com.olliejw.oremarket.Utils.UpdateChecker;
-
+import com.olliejw.oremarket.Utils.Updates;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,26 +17,27 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
-public final class OreMarket extends JavaPlugin {
+public final class OreMarket extends JavaPlugin implements Listener {
     ValueUpdates valueUpdates = new ValueUpdates();
     MarketCrash mkCrash = new MarketCrash();
     Stats stats = new Stats();
 
+    private File guiFile;
+    private FileConfiguration guiConfig;
     private static OreMarket instance;
     private static final Logger log = Logger.getLogger("Minecraft");
     private static Economy econ = null;
-
-    private File guiFile;
-    private FileConfiguration guiConfig;
 
     public void onEnable() {
         instance = this;
@@ -44,7 +46,7 @@ public final class OreMarket extends JavaPlugin {
         Logger logger = this.getLogger();
 
         // Spigot and bStats
-        new UpdateChecker(this, 91015).getVersion(version -> {
+        new Updates(this, 91015).getVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
                 logger.info("You are up to date!");
             } else {
@@ -84,7 +86,13 @@ public final class OreMarket extends JavaPlugin {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
         }
+
+        // Placeholder API
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
+            new Placeholders().register();
+        }
     }
+
 
     public FileConfiguration getGuiConfig() {
         return this.guiConfig;
@@ -104,7 +112,6 @@ public final class OreMarket extends JavaPlugin {
             e.printStackTrace();
         }
     }
-
     public void saveGuiConfig() {
         try {
             guiConfig.save(guiFile);
@@ -119,6 +126,7 @@ public final class OreMarket extends JavaPlugin {
             e.printStackTrace();
         }
     }
+
 
     public static OreMarket main(){
         return instance;

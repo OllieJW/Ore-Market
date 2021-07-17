@@ -9,13 +9,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -576,10 +570,8 @@ public class Metrics {
 
         /**
          * Class constructor.
-         *
-         * @param chartId The id of the chart.
-         * @param callable The callable which is used to request the chart data.
-         */
+         *  @param chartId The id of the chart.
+         * @param callable The callable which is used to request the chart data.*/
         public SimplePie(String chartId, Callable<String> callable) {
             super(chartId);
             this.callable = callable;
