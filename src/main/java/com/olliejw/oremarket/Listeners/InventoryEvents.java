@@ -87,42 +87,72 @@ public class InventoryEvents implements Listener {
             clickedItem = new ItemStack(Objects.requireNonNull(Material.matchMaterial(itemConfig))); // Item that user clicked
             int slot = event.getSlot();
 
-            if ((event.getClick() == ClickType.LEFT) && (!OreMarket.main().getGuiConfig().getBoolean("items." + event.getSlot() + ".buyonly"))) { // Sell Mode
-                double value = OreMarket.main().getGuiConfig().getDouble("items." + slot + ".value");
-                int stock = OreMarket.main().getGuiConfig().getInt("items." + slot + ".stock");
-                if (playerInventory.containsAtLeast(clickedItem, 1) || OreMarket.main().getGuiConfig().getBoolean("items." + slot + ".copymeta")) {
-                    if (OreMarket.main().getGuiConfig().getBoolean("items." + slot + ".copymeta")) {
-                        playerInventory.removeItem(event.getCurrentItem());
-                    }
-                    else {
-                        playerInventory.removeItem(clickedItem);
-                    }
-                    addMoney(value, player);
-                    valueChange(slot, value, true);
-                    stockChange(slot, stock, 1, true);
-                }
-            }
-            if ((event.getClick() == ClickType.RIGHT) && (!OreMarket.main().getGuiConfig().getBoolean("items." + event.getSlot() + ".sellonly"))) { // Buy Mode
-                double value = OreMarket.main().getGuiConfig().getDouble("items." + slot + ".value");
-                int stock = OreMarket.main().getGuiConfig().getInt("items." + slot + ".stock");
-                if (balance(player) > value) {
-                    if ((stock > 1 || stock == -1) && (value > 1)) {
+            if ((event.getClick() == ClickType.LEFT)) { // Sell Mode
+                if (!OreMarket.main().getGuiConfig().getBoolean("items." + event.getSlot() + ".buyonly")) {
+                    double value = OreMarket.main().getGuiConfig().getDouble("items." + slot + ".value");
+                    int stock = OreMarket.main().getGuiConfig().getInt("items." + slot + ".stock");
+                    if (playerInventory.containsAtLeast(clickedItem, 1) || OreMarket.main().getGuiConfig().getBoolean("items." + slot + ".copymeta")) {
                         if (OreMarket.main().getGuiConfig().getBoolean("items." + slot + ".copymeta")) {
-                            playerInventory.addItem(event.getCurrentItem());
+                            playerInventory.removeItem(event.getCurrentItem());
                         }
                         else {
-                            playerInventory.addItem(clickedItem);
+                            playerInventory.removeItem(clickedItem);
                         }
-                        takeMoney(value, player);
-                        valueChange(slot, value, false);
-                        stockChange(slot, stock, 1, false);
+                        addMoney(value, player);
+                        valueChange(slot, value, true);
+                        stockChange(slot, stock, 1, true);
+
+                        String message = OreMarket.main().getGuiConfig().getString("gui.messages.successfully-sold", "&aYou have successfully sold the item!");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+                    } else {
+                        String message = OreMarket.main().getGuiConfig().getString("gui.messages.no-item", "&cYou don't have that item!");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                     }
+                } else {
+                    String message = OreMarket.main().getGuiConfig().getString("gui.messages.buy-only", "&cThis item can only be bought");
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+                }
+            }
+            if ((event.getClick() == ClickType.RIGHT)) { // Buy Mode
+                if (!OreMarket.main().getGuiConfig().getBoolean("items." + event.getSlot() + ".sellonly")) {
+                    double value = OreMarket.main().getGuiConfig().getDouble("items." + slot + ".value");
+                    int stock = OreMarket.main().getGuiConfig().getInt("items." + slot + ".stock");
+                    if (balance(player) > value) {
+                        if (stock > 1 || stock == -1) {
+                            if (value > 1) {
+                                if (OreMarket.main().getGuiConfig().getBoolean("items." + slot + ".copymeta")) {
+                                    playerInventory.addItem(event.getCurrentItem());
+                                }
+                                else {
+                                    playerInventory.addItem(clickedItem);
+                                }
+                                takeMoney(value, player);
+                                valueChange(slot, value, false);
+                                stockChange(slot, stock, 1, false);
+                                String message = OreMarket.main().getGuiConfig().getString("gui.messages.successfully-bought", "&aYou have successfully bought the item!");
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+                            } else {
+                                String message = OreMarket.main().getGuiConfig().getString("gui.messages.price-too-low", "&cPrice of item is too low for buying!");
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+                            }
+                        } else {
+                            String message = OreMarket.main().getGuiConfig().getString("gui.messages.no-stocks", "&cMarket is run out of item stocks!");
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+                        }
+                    } else {
+                        String message = OreMarket.main().getGuiConfig().getString("gui.messages.insufficient-balance", "&cYou don't have enough money to buy this item!");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+                    }
+                } else {
+                    String message = OreMarket.main().getGuiConfig().getString("gui.messages.sell-only", "&cThis item can only be sold");
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                 }
             }
 
             assert keySection != null;
             for (String command : Objects.requireNonNull(OreMarket.main().getGuiConfig().getStringList("items." + event.getSlot() + ".commands"))) {
-                if (command != null) { String toSend = plh.format(command, player, keySection);
+                if (command != null) {
+                    String toSend = plh.format(command, player, keySection);
                     if (toSend.equals("[close]")) {
                         player.closeInventory();
                     }
