@@ -12,22 +12,24 @@ public class ValueUpdates {
     Placeholders plh = new Placeholders();
 
     public void announceValue() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(OreMarket.main(), () -> {
-            for (String key : Objects.requireNonNull(OreMarket.main().getGuiConfig().getConfigurationSection("items")).getKeys(false)) {
-                ConfigurationSection keySection = Objects.requireNonNull(OreMarket.main().getGuiConfig().getConfigurationSection("items")).getConfigurationSection(key);
-                String message = OreMarket.main().getConfig().getString("valuemessage.format");
+        if(OreMarket.main().getConfig().getBoolean("valuemessage.enabled")) {
+            Bukkit.getScheduler().scheduleSyncRepeatingTask(OreMarket.main(), () -> {
+                for (String key : Objects.requireNonNull(OreMarket.main().getGuiConfig().getConfigurationSection("items")).getKeys(false)) {
+                    ConfigurationSection keySection = Objects.requireNonNull(OreMarket.main().getGuiConfig().getConfigurationSection("items")).getConfigurationSection(key);
+                    String message = OreMarket.main().getConfig().getString("valuemessage.format");
 
-                assert keySection != null;
-                assert message != null;
+                    assert keySection != null;
+                    assert message != null;
 
-                for (Player player: Bukkit.getOnlinePlayers()) {
-                    if (keySection.getBoolean("hide")) {
-                        return;
+                    for (Player player: Bukkit.getOnlinePlayers()) {
+                        if (keySection.getBoolean("hide")) {
+                            return;
+                        }
+                        player.sendMessage(plh.format(message, player, keySection));
                     }
-                    player.sendMessage(plh.format(message, player, keySection));
                 }
-            }
 
-        }, 0L, (OreMarket.main().getConfig().getInt("valuemessage.time")* 20L*60));
+            }, 0L, (OreMarket.main().getConfig().getInt("valuemessage.time")* 20L*60));
+        }
     }
 }

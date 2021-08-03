@@ -5,6 +5,7 @@
 prefix: '&bOreMarket '
 
 valuemessage:
+  enabled: true
   # Time (in minutes) to send this message
   time: 5
   # The below will look like: (These values are just examples)
