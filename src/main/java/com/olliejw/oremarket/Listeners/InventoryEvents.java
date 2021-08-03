@@ -123,7 +123,7 @@ public class InventoryEvents implements Listener {
                             playerInventory.removeItem(clickedItem);
                         }
                         addMoney(value, player);
-                        valueChange(slot, value, true);
+                        valueChange(slot, value, false);
                         stockChange(slot, stock, 1, true);
 
                         String message = OreMarket.main().getGuiConfig().getString("gui.messages.successfully-sold", "&aYou have successfully sold the item!");
@@ -151,7 +151,7 @@ public class InventoryEvents implements Listener {
                                     playerInventory.addItem(clickedItem);
                                 }
                                 takeMoney(value, player);
-                                valueChange(slot, value, false);
+                                valueChange(slot, value, true);
                                 stockChange(slot, stock, 1, false);
                                 String message = OreMarket.main().getGuiConfig().getString("gui.messages.successfully-bought", "&aYou have successfully bought the item!");
                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
