@@ -126,14 +126,14 @@ public class InventoryEvents implements Listener {
                         valueChange(slot, value, false);
                         stockChange(slot, stock, 1, true);
 
-                        String message = OreMarket.main().getGuiConfig().getString("gui.messages.successfully-sold", "&aYou have successfully sold the item!");
+                        String message = OreMarket.main().getGuiConfig().getString("messages.successfully-sold", "&aYou have successfully sold the item!");
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                     } else {
-                        String message = OreMarket.main().getGuiConfig().getString("gui.messages.no-item", "&cYou don't have that item!");
+                        String message = OreMarket.main().getGuiConfig().getString("messages.no-item", "&cYou don't have that item!");
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                     }
                 } else {
-                    String message = OreMarket.main().getGuiConfig().getString("gui.messages.buy-only", "&cThis item can only be bought");
+                    String message = OreMarket.main().getGuiConfig().getString("messages.buy-only", "&cThis item can only be bought");
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                 }
             }
@@ -153,22 +153,22 @@ public class InventoryEvents implements Listener {
                                 takeMoney(value, player);
                                 valueChange(slot, value, true);
                                 stockChange(slot, stock, 1, false);
-                                String message = OreMarket.main().getGuiConfig().getString("gui.messages.successfully-bought", "&aYou have successfully bought the item!");
+                                String message = OreMarket.main().getGuiConfig().getString("messages.successfully-bought", "&aYou have successfully bought the item!");
                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                             } else {
-                                String message = OreMarket.main().getGuiConfig().getString("gui.messages.price-too-low", "&cPrice of item is too low for buying!");
+                                String message = OreMarket.main().getGuiConfig().getString("messages.price-too-low", "&cPrice of item is too low for buying!");
                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                             }
                         } else {
-                            String message = OreMarket.main().getGuiConfig().getString("gui.messages.no-stocks", "&cMarket is run out of item stocks!");
+                            String message = OreMarket.main().getGuiConfig().getString("messages.no-stocks", "&cMarket is run out of item stocks!");
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                         }
                     } else {
-                        String message = OreMarket.main().getGuiConfig().getString("gui.messages.insufficient-balance", "&cYou don't have enough money to buy this item!");
+                        String message = OreMarket.main().getGuiConfig().getString("messages.insufficient-balance", "&cYou don't have enough money to buy this item!");
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                     }
                 } else {
-                    String message = OreMarket.main().getGuiConfig().getString("gui.messages.sell-only", "&cThis item can only be sold");
+                    String message = OreMarket.main().getGuiConfig().getString("messages.sell-only", "&cThis item can only be sold");
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                 }
             }
