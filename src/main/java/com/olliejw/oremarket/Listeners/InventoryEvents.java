@@ -87,6 +87,25 @@ public class InventoryEvents implements Listener {
             clickedItem = new ItemStack(Objects.requireNonNull(Material.matchMaterial(itemConfig))); // Item that user clicked
             int slot = event.getSlot();
 
+            if (OreMarket.main().getGuiConfig().contains("items." + event.getSlot() + ".commands")) {
+                assert keySection != null;
+                for (String command : Objects.requireNonNull(OreMarket.main().getGuiConfig().getStringList("items." + event.getSlot() + ".commands"))) {
+                    if (command != null) {
+                        String toSend = plh.format(command, player, keySection);
+                        if (toSend.equals("[close]")) {
+                            player.closeInventory();
+                        }
+                        else if (toSend.contains("[msg]")) {
+                            player.sendMessage(toSend.replace("[msg] ", ""));
+                        }
+                        else {
+                            Bukkit.dispatchCommand(player, toSend);
+                        }
+                    }
+                }
+                return;
+            }
+                
             if ((event.getClick() == ClickType.LEFT)) { // Sell Mode
                 if (!OreMarket.main().getGuiConfig().getBoolean("items." + event.getSlot() + ".buyonly")) {
                     double value = OreMarket.main().getGuiConfig().getDouble("items." + slot + ".value");
@@ -146,22 +165,6 @@ public class InventoryEvents implements Listener {
                 } else {
                     String message = OreMarket.main().getGuiConfig().getString("gui.messages.sell-only", "&cThis item can only be sold");
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
-                }
-            }
-
-            assert keySection != null;
-            for (String command : Objects.requireNonNull(OreMarket.main().getGuiConfig().getStringList("items." + event.getSlot() + ".commands"))) {
-                if (command != null) {
-                    String toSend = plh.format(command, player, keySection);
-                    if (toSend.equals("[close]")) {
-                        player.closeInventory();
-                    }
-                    else if (toSend.contains("[msg]")) {
-                        player.sendMessage(toSend.replace("[msg] ", ""));
-                    }
-                    else {
-                        Bukkit.dispatchCommand(player, toSend);
-                    }
                 }
             }
         }
