@@ -19,7 +19,7 @@ public class AddItem implements Listener {
     String title = OreMarket.main().getGuiConfig().getString("gui.title");
     int rows = OreMarket.main().getGuiConfig().getInt("gui.rows");
     Inventory inv = Bukkit.createInventory(null, rows*9, ChatColor.translateAlternateColorCodes('&', title));
-    PlaceHolders plh = new PlaceHolders();
+    Placeholders plh = new Placeholders();
 
     public void createGUI (Player player) {
         for (String key : Objects.requireNonNull(OreMarket.main().getGuiConfig().getConfigurationSection("items")).getKeys(false)) {
