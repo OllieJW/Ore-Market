@@ -32,8 +32,13 @@ public class InventoryEvents implements Listener {
         OreMarket.getEconomy().depositPlayer((OfflinePlayer) Player, Money);
     }
     public void takeMoney (double Money, HumanEntity Player) { // Buy
-        double tax = OreMarket.main().getConfig().getDouble("tax");
-        double total = (Money + (Money/tax));
+        double tax = OreMarket.main().getConfig().getDouble("tax", 0.0);
+        double total;
+        if (tax == 0.0) {
+            total = Money;
+        } else {
+            total = (Money + (Money/tax));
+        }
         OreMarket.getEconomy().withdrawPlayer((OfflinePlayer) Player, total);
     }
     public double balance (HumanEntity Player) {
