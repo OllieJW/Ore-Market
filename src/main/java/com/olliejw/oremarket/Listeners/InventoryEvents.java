@@ -22,36 +22,50 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.util.Objects;
+import java.lang.Math;
 
 public class InventoryEvents implements Listener {
-
     public void message (String Message, HumanEntity Player) {
         Player.sendMessage(ChatColor.translateAlternateColorCodes('&', OreMarket.main().getConfig().getString("prefix") + Message));
     }
-    public void addMoney (double Money, HumanEntity Player) { // Sold
-        OreMarket.getEconomy().depositPlayer((OfflinePlayer) Player, Money);
+
+    public void changePlayerBalance(double Money, HumanEntity Player, boolean operation) { // Buy
+        double total = calculateTotalWithTax(Money);
+        if (Money > 0) {
+            if (operation) // true is buy, false is sell
+                OreMarket.getEconomy().withdrawPlayer((OfflinePlayer) Player, total);
+            else
+                OreMarket.getEconomy().depositPlayer((OfflinePlayer) Player, total);
+        } else if (Money < 0) {
+            if (operation)
+                OreMarket.getEconomy().depositPlayer((OfflinePlayer) Player, Math.abs(total));
+            else
+                OreMarket.getEconomy().withdrawPlayer((OfflinePlayer) Player, Math.abs(total));
+        }
     }
-    public void takeMoney (double Money, HumanEntity Player) { // Buy
+
+    private double calculateTotalWithTax(double price) {
         double tax = OreMarket.main().getConfig().getDouble("tax", 0.0);
         double total;
         if (tax == 0.0) {
-            total = Money;
+            total = price;
         } else {
-            total = (Money + (Money/tax));
+            total = (price + (Math.abs(price)*tax));
         }
-        OreMarket.getEconomy().withdrawPlayer((OfflinePlayer) Player, total);
+        return total;
     }
+
     public double balance (HumanEntity Player) {
         return OreMarket.getEconomy().getBalance((OfflinePlayer) Player);
     }
     public void valueChange (int Slot, double Current, boolean Positive) {
         double multiplier = OreMarket.main().getConfig().getDouble("multiplier");
-        double currentIncrease = ((Current / 100.0) * (100 + multiplier));
-        double currentDecrease = ((Current / 100.0) * (100 - multiplier));
+        double currentIncrease = Current + (Math.abs(Current) * (multiplier / 100.0));
+        double currentDecrease = Current - (Math.abs(Current) * (multiplier / 100.0));
         if (Positive) {
-            OreMarket.main().getGuiConfig().set("items." + Slot + ".value", Math.round(currentIncrease*100.0)/100.0);
+            OreMarket.main().getGuiConfig().set("items." + Slot + ".value", currentIncrease);
         } else {
-            OreMarket.main().getGuiConfig().set("items." + Slot + ".value", Math.round(currentDecrease*100.0)/100.0);
+            OreMarket.main().getGuiConfig().set("items." + Slot + ".value", currentDecrease);
         }
         OreMarket.main().saveGuiConfig();
     }
@@ -122,7 +136,7 @@ public class InventoryEvents implements Listener {
                         else {
                             playerInventory.removeItem(clickedItem);
                         }
-                        addMoney(value, player);
+                        changePlayerBalance(value, player, false);
                         valueChange(slot, value, false);
                         stockChange(slot, stock, 1, true);
 
@@ -143,22 +157,17 @@ public class InventoryEvents implements Listener {
                     int stock = OreMarket.main().getGuiConfig().getInt("items." + slot + ".stock");
                     if (balance(player) > value) {
                         if (stock > 1 || stock == -1) {
-                            if (value > 1) {
-                                if (OreMarket.main().getGuiConfig().getBoolean("items." + slot + ".copymeta")) {
-                                    playerInventory.addItem(event.getCurrentItem());
-                                }
-                                else {
-                                    playerInventory.addItem(clickedItem);
-                                }
-                                takeMoney(value, player);
-                                valueChange(slot, value, true);
-                                stockChange(slot, stock, 1, false);
-                                String message = OreMarket.main().getGuiConfig().getString("messages.successfully-bought", "&aYou have successfully bought the item!");
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
-                            } else {
-                                String message = OreMarket.main().getGuiConfig().getString("messages.price-too-low", "&cPrice of item is too low for buying!");
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+                            if (OreMarket.main().getGuiConfig().getBoolean("items." + slot + ".copymeta")) {
+                                playerInventory.addItem(event.getCurrentItem());
                             }
+                            else {
+                                playerInventory.addItem(clickedItem);
+                            }
+                            changePlayerBalance(value, player, true);
+                            valueChange(slot, value, true);
+                            stockChange(slot, stock, 1, false);
+                            String message = OreMarket.main().getGuiConfig().getString("messages.successfully-bought", "&aYou have successfully bought the item!");
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                         } else {
                             String message = OreMarket.main().getGuiConfig().getString("messages.no-stocks", "&cMarket is run out of item stocks!");
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
