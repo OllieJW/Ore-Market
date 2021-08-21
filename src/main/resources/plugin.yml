@@ -1,6 +1,6 @@
 name: OreMarket
 version: ${project.version}
-main: com.olliejw.oremarket.OreMarket
+main: me.olliejw.oremarket.OreMarket
 api-version: 1.16
 depend: [ Vault ]
 softdepend: [ PlaceholderAPI ]

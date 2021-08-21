@@ -3,6 +3,7 @@
 gui:
   title: '&4OreMarket'
   rows: 3
+
 messages:
   sell-only: "&cThis item can only be sold!"
   buy-only: "&cThis item can only be bought"
@@ -12,6 +13,7 @@ messages:
   no-stocks: "&cMarket is run out of item stocks!"
   successfully-bought: "&aYou have successfully bought the item!"
   successfully-sold: "&aYou have successfully sold the item!"
+
 items:
   0:
     item: DIAMOND

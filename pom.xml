@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.olliejw</groupId>
+    <groupId>me.olliejw</groupId>
     <artifactId>OreMarket</artifactId>
-    <version>2.2.0</version>
+    <version>2.2.2</version>
     <packaging>jar</packaging>
 
     <name>OreMarket</name>
@@ -66,6 +66,10 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -79,15 +83,19 @@
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/jars/Vault.jar</systemPath>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.10.10</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/jars/PlaceholderAPI-2.10.10.jar</systemPath>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
