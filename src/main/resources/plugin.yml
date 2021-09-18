@@ -6,6 +6,7 @@ depend: [ Vault ]
 softdepend: [ PlaceholderAPI ]
 authors: [ OllieJW ]
 description: Realistic stock market for ores
+website: https://olliejw.me
 
 commands:
   openmarket:
@@ -20,3 +21,13 @@ commands:
   om-crash:
     description: Crashes Market
     usage: /<command>
+
+permissions:
+  oremarket.crashmarket:
+    default: op
+  oremarket.reload:
+    default: op
+  oremarket.open:
+    default: not op
+  oremarket.stats:
+    default: not op

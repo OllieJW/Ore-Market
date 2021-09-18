@@ -12,6 +12,7 @@ import me.olliejw.oremarket.utils.Stats;
 import me.olliejw.oremarket.utils.Updates;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -38,20 +39,23 @@ public final class OreMarket extends JavaPlugin implements Listener {
         saveDefaultConfig();
         createGuiConfig();
 
-        Logger logger = this.getLogger();
         instance = this;
 
         // Spigot and bStats
         new Updates(this, 91015).getVersion(version -> {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-                logger.info("OreMarket v" + version + " is up-to-date!");
+                this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "   ___   __  __ ");
+                this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "  / _ \\ |  \\/  |     " + ChatColor.GREEN +"OreMarket v"+this.getDescription().getVersion());
+                this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + " | (_) || |\\/| |");
+                this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "  \\___/ |_|  |_|");
+                this.getServer().getConsoleSender().sendMessage("");
             }
             else {
-                logger.info("============================");
-                logger.info("OreMarket v" + version + " is now available!");
-                logger.info("Your on still on v" + this.getDescription().getVersion());
-                logger.info("spigotmc.org/resources/91015");
-                logger.info("============================");
+                this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "   ___   __  __ ");
+                this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "  / _ \\ |  \\/  |     " + ChatColor.RED +"OreMarket v"+this.getDescription().getVersion());
+                this.getServer().getConsoleSender().sendMessage(ChatColor.RED + " | (_) || |\\/| |     " + ChatColor.GREEN + "v" + version + " now available!");
+                this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "  \\___/ |_|  |_|     " + ChatColor.GREEN + "Download at spigotmc.org");
+                this.getServer().getConsoleSender().sendMessage("");
             }
         });
         final Metrics metrics = new Metrics(this, 10961);
