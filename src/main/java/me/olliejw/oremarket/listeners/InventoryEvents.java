@@ -29,9 +29,9 @@ public class InventoryEvents implements Listener {
             total = price;
         } else {
             if (operation) {
-                total = (price + (price/tax));
+                    total = (price + (price * (tax/100)));
             } else {
-                total = (price - (price/tax));
+                total = (price - (price * (tax/100)));
             }
         }
         return total;
@@ -76,7 +76,6 @@ public class InventoryEvents implements Listener {
             int slot = event.getSlot();
 
             if (OreMarket.main().getGuiConfig().contains("items." + event.getSlot() + ".commands")) {
-
                 for (String command : Objects.requireNonNull(OreMarket.main().getGuiConfig().getStringList("items." + event.getSlot() + ".commands"))) {
                     if (command != null) {
                         assert keySection != null;
@@ -98,13 +97,13 @@ public class InventoryEvents implements Listener {
             if ((event.getClick() == ClickType.LEFT)) { // Sell Mode
                 if (OreMarket.main().getGuiConfig().getBoolean("items." + event.getSlot() + ".buyonly")) {
                     // You cannot sell this, Buy only item
-                    String message = OreMarket.main().getGuiConfig().getString("messages.buy-only", "&cThis item can only be bought");
+                    String message = OreMarket.main().getMsgConfig().getString("messages.buy-only", "&cThis item can only be bought");
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                     return;
                 }
 
                 if (!(playerInventory.containsAtLeast(clickedItem, 1))) {
-                    String message = OreMarket.main().getGuiConfig().getString("messages.no-item", "&cYou don't have that item!");
+                    String message = OreMarket.main().getMsgConfig().getString("messages.no-item", "&cYou don't have that item!");
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                     return;
                 }
@@ -125,13 +124,13 @@ public class InventoryEvents implements Listener {
                 OreMarket.main().getGuiConfig().set("items." + slot + ".stock", itemStock+1);
                 OreMarket.main().saveGuiConfig();
 
-                String message = OreMarket.main().getGuiConfig().getString("messages.successfully-bought", "&aYou have successfully bought this item!");
+                String message = OreMarket.main().getMsgConfig().getString("messages.successfully-sold", "&aYou have successfully sold this item!");
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
             }
             if ((event.getClick() == ClickType.RIGHT)) { // Buy Mode
                 if (OreMarket.main().getGuiConfig().getBoolean("items." + event.getSlot() + ".sellonly")) {
                     // You cannot buy this, Sell only item
-                    String message = OreMarket.main().getGuiConfig().getString("messages.sell-only", "&cThis item can only be sold");
+                    String message = OreMarket.main().getMsgConfig().getString("messages.sell-only", "&cThis item can only be sold");
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                     return;
                 }
@@ -140,7 +139,7 @@ public class InventoryEvents implements Listener {
                 int itemStock = OreMarket.main().getGuiConfig().getInt("items." + slot + ".stock");
 
                 if (balance(player) < itemValue) {
-                    String message = OreMarket.main().getGuiConfig().getString("insufficient-balance", "&cYou don't have enough money to buy this item!");
+                    String message = OreMarket.main().getMsgConfig().getString("messages.insufficient-balance", "&cYou don't have enough money to buy this item!");
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                     return;
                 }
@@ -158,7 +157,7 @@ public class InventoryEvents implements Listener {
                 OreMarket.main().getGuiConfig().set("items." + slot + ".stock", itemStock-1);
                 OreMarket.main().saveGuiConfig();
 
-                String message = OreMarket.main().getGuiConfig().getString("messages.successfully-sold", "&aYou have successfully bought the item!");
+                String message = OreMarket.main().getMsgConfig().getString("messages.successfully-bought", "&aYou have successfully bought the item!");
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
             }
             mainGUI.createGUI((Player) player); // Reload GUI

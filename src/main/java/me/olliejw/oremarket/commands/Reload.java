@@ -13,9 +13,11 @@ public class Reload implements CommandExecutor {
         if (sender.hasPermission("oremarket.reload")) {
             OreMarket.main().reloadConfig();
             OreMarket.main().reloadGuiConfig();
-            sender.sendMessage(ChatColor.GREEN + "Reloaded successfully. Some options may require a restart to take place.");
+            String message = OreMarket.main().getMsgConfig().getString("messages.reload", "&aReloaded successfully. Some options may require a restart to take place.");
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
         } else {
-            sender.sendMessage(ChatColor.RED + "You do not have permission to do this!");
+            String message = OreMarket.main().getMsgConfig().getString("messages.insufficient-permission", "&cYou do not have permission to do this!");
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
         }
         return true;
     }

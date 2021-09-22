@@ -28,6 +28,6 @@ permissions:
   oremarket.reload:
     default: op
   oremarket.open:
-    default: not op
+    default: true
   oremarket.stats:
-    default: not op
+    default: true

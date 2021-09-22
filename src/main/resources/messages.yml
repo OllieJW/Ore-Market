@@ -1,0 +1,15 @@
+messages:
+  # GUI
+  sell-only: "&cThis item can only be sold!"
+  buy-only: "&cThis item can only be bought"
+  no-item: "&cYou don't have that item!"
+  insufficient-balance: "&cYou don't have enough money to buy this item!"
+  price-too-low: "&cPrice of item is too low for buying!"
+  no-stocks: "&cMarket is run out of item stocks!"
+  successfully-bought: "&aYou have successfully bought the item!"
+  successfully-sold: "&aYou have successfully sold the item!"
+  # Market Crash
+  market-crash: "&4&lMARKET CRASH! ORE VALUES DECREASED BY UP TO [amount]%"
+  # Commands
+  insufficient-permission: "&cYou do not have permission to do this!"
+  reload: "&aReloaded successfully. Some options may require a restart to take place."

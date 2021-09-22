@@ -40,9 +40,7 @@ public class Placeholders extends PlaceholderExpansion {
         return PlaceholderAPI.setPlaceholders(playerObj, formatted);
     }
 
-
     // Placeholder API
-
     @Override
     public boolean canRegister() {
         return true;

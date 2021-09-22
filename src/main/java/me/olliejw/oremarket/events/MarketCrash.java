@@ -13,7 +13,7 @@ import java.util.Objects;
 public class MarketCrash implements Listener {
     public void forceCrash() {
         // Notification
-        String notification = OreMarket.main().getConfig().getString("marketcrash.message");
+        String notification = OreMarket.main().getMsgConfig().getString("messages.market-crash");
         for (Player player: Bukkit.getOnlinePlayers()) {
             assert notification != null;
             String message = ChatColor.translateAlternateColorCodes('&', notification).replace("[amount]", Objects.requireNonNull(OreMarket.main().getConfig().getString("marketcrash.amount")));

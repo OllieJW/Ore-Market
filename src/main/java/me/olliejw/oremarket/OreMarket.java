@@ -10,6 +10,7 @@ import me.olliejw.oremarket.listeners.InventoryEvents;
 import me.olliejw.oremarket.utils.Placeholders;
 import me.olliejw.oremarket.utils.Stats;
 import me.olliejw.oremarket.utils.Updates;
+import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,7 +39,7 @@ public final class OreMarket extends JavaPlugin implements Listener {
     public void onEnable() {
         saveDefaultConfig();
         createGuiConfig();
-
+        createMsgConfig();
         instance = this;
 
         // Spigot and bStats
@@ -46,7 +47,7 @@ public final class OreMarket extends JavaPlugin implements Listener {
             if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
                 this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "   ___   __  __ ");
                 this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "  / _ \\ |  \\/  |     " + ChatColor.GREEN +"OreMarket v"+this.getDescription().getVersion());
-                this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + " | (_) || |\\/| |");
+                this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + " | (_) || |\\/| |     " + ChatColor.GREEN +"Up to date!");
                 this.getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "  \\___/ |_|  |_|");
                 this.getServer().getConsoleSender().sendMessage("");
             }
@@ -129,6 +130,33 @@ public final class OreMarket extends JavaPlugin implements Listener {
     public void reloadGuiConfig() {
         try {
             guiConfig.load(guiFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private File msgFile;
+    private FileConfiguration msgConfig;
+    public FileConfiguration getMsgConfig() {
+        return this.msgConfig;
+    }
+    private void createMsgConfig() {
+        msgFile = new File(getDataFolder(), "messages.yml");
+        if (!msgFile.exists()) {
+            msgFile.getParentFile().mkdirs();
+            saveResource("messages.yml", false);
+        }
+
+        msgConfig = new YamlConfiguration();
+        try {
+            msgConfig.load(msgFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
+    public void reloadMsgConfig() {
+        try {
+            msgConfig.load(msgFile);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }

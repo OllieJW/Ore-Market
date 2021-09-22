@@ -4,16 +4,6 @@ gui:
   title: '&4OreMarket'
   rows: 3
 
-messages:
-  sell-only: "&cThis item can only be sold!"
-  buy-only: "&cThis item can only be bought"
-  no-item: "&cYou don't have that item!"
-  insufficient-balance: "&cYou don't have enough money to buy this item!"
-  price-too-low: "&cPrice of item is too low for buying!"
-  no-stocks: "&cMarket is run out of item stocks!"
-  successfully-bought: "&aYou have successfully bought the item!"
-  successfully-sold: "&aYou have successfully sold the item!"
-
 items:
   0:
     item: DIAMOND
