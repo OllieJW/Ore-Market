@@ -51,6 +51,29 @@ public class InventoryEvents implements Listener {
     private double balance (HumanEntity Player) {
         return OreMarket.getEconomy().getBalance((OfflinePlayer) Player);
     }
+    /*SPOILER! private int getItemAmount (HumanEntity player, ItemStack item) {
+        if (item == null) {
+            return 0;
+        }
+        int amount = 0;
+        for (int i = 0; i < 36; i++) {
+            ItemStack slot = player.getInventory().getItem(i);
+            if (slot == null || !slot.isSimilar(item)) {
+                continue;
+            }
+            amount += slot.getAmount();
+        }
+        return amount;
+    }
+    private void removeItemAmount (HumanEntity player, ItemStack item) {
+        for (int i = 0; i < 36; i++) {
+            ItemStack slot = player.getInventory().getItem(i);
+            if (slot == null || !slot.equals(item)) {
+                continue;
+            }
+            slot.setAmount(0);
+        }
+    }*/
 
     String title = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(OreMarket.main().getGuiConfig().getString("gui.title")));
     Placeholders plh = new Placeholders();
@@ -112,11 +135,15 @@ public class InventoryEvents implements Listener {
                 int itemStock = OreMarket.main().getGuiConfig().getInt("items." + slot + ".stock");
 
                 if (OreMarket.main().getGuiConfig().getBoolean("items." + slot + ".copymeta")) {
-                    // Take any type of the clicked item (e.g. custom name)
-                    playerInventory.removeItem(event.getCurrentItem());
-                }
-                else {
                     // Take the EXACT item (e.g. exact custom name)
+                    if (!(playerInventory.containsAtLeast(event.getCurrentItem(), 1))) {
+                        String message = OreMarket.main().getMsgConfig().getString("messages.no-item", "&cYou don't have that item!");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+                        return;
+                    }
+                    playerInventory.removeItem(event.getCurrentItem());
+                } else {
+                    // Take any type of the clicked item (e.g. custom name)
                     playerInventory.removeItem(clickedItem);
                 }
 
@@ -127,6 +154,45 @@ public class InventoryEvents implements Listener {
                 String message = OreMarket.main().getMsgConfig().getString("messages.successfully-sold", "&aYou have successfully sold this item!");
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
             }
+            /* SPOILER!: if ((event.getClick() == ClickType.SHIFT_LEFT)) { // Sell ALL Mode
+                if (OreMarket.main().getGuiConfig().getBoolean("items." + event.getSlot() + ".buyonly")) {
+                    // You cannot sell this, Buy only item
+                    String message = OreMarket.main().getMsgConfig().getString("messages.buy-only", "&cThis item can only be bought");
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+                    return;
+                }
+
+                if (!(playerInventory.containsAtLeast(clickedItem, 1))) {
+                    String message = OreMarket.main().getMsgConfig().getString("messages.no-item", "&cYou don't have that item!");
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+                    return;
+                }
+
+                double itemValue = OreMarket.main().getGuiConfig().getDouble("items." + slot + ".value");
+                int itemStock = OreMarket.main().getGuiConfig().getInt("items." + slot + ".stock");
+                int itemAmount = getItemAmount(player, clickedItem);
+
+                if (OreMarket.main().getGuiConfig().getBoolean("items." + slot + ".copymeta")) {
+                    // Take the EXACT item and amount (e.g. exact custom name)
+                    if (!(playerInventory.containsAtLeast(event.getCurrentItem(), 1))) {
+                        String message = OreMarket.main().getMsgConfig().getString("messages.no-item", "&cYou don't have that item!");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+                        return;
+                    }
+                    removeItemAmount(player, event.getCurrentItem());
+                }
+                else {
+                    // Take any type of the clicked item (e.g. custom name)
+                    removeItemAmount(player, clickedItem);
+                }
+
+                changePlayerBalance(itemValue*itemAmount, player, false, slot);
+                OreMarket.main().getGuiConfig().set("items." + slot + ".stock", itemStock+itemAmount);
+                OreMarket.main().saveGuiConfig();
+
+                String message = OreMarket.main().getMsgConfig().getString("messages.successfully-sold", "&aYou have successfully sold this item!");
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+            }*/
             if ((event.getClick() == ClickType.RIGHT)) { // Buy Mode
                 if (OreMarket.main().getGuiConfig().getBoolean("items." + event.getSlot() + ".sellonly")) {
                     // You cannot buy this, Sell only item
@@ -138,7 +204,13 @@ public class InventoryEvents implements Listener {
                 double itemValue = OreMarket.main().getGuiConfig().getDouble("items." + slot + ".value");
                 int itemStock = OreMarket.main().getGuiConfig().getInt("items." + slot + ".stock");
 
+                if (itemStock > 0)  {
+                    // Is there any stock?
+                    return;
+                }
+
                 if (balance(player) < itemValue) {
+                    // Player has enough money?
                     String message = OreMarket.main().getMsgConfig().getString("messages.insufficient-balance", "&cYou don't have enough money to buy this item!");
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                     return;
@@ -147,8 +219,7 @@ public class InventoryEvents implements Listener {
                 if (OreMarket.main().getGuiConfig().getBoolean("items." + slot + ".copymeta")) {
                     // Take any type of the clicked item (e.g. custom name)
                     playerInventory.addItem(event.getCurrentItem());
-                }
-                else {
+                } else {
                     // Take the EXACT item (e.g. exact custom name)
                     playerInventory.addItem(clickedItem);
                 }
@@ -160,6 +231,7 @@ public class InventoryEvents implements Listener {
                 String message = OreMarket.main().getMsgConfig().getString("messages.successfully-bought", "&aYou have successfully bought the item!");
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
             }
+
             mainGUI.createGUI((Player) player); // Reload GUI
         }
     }

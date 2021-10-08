@@ -154,13 +154,6 @@ public final class OreMarket extends JavaPlugin implements Listener {
             e.printStackTrace();
         }
     }
-    public void reloadMsgConfig() {
-        try {
-            msgConfig.load(msgFile);
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static OreMarket main(){
         return instance;
