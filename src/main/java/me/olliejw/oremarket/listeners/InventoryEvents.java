@@ -204,7 +204,7 @@ public class InventoryEvents implements Listener {
                 double itemValue = OreMarket.main().getGuiConfig().getDouble("items." + slot + ".value");
                 int itemStock = OreMarket.main().getGuiConfig().getInt("items." + slot + ".stock");
 
-                if (itemStock > 0)  {
+                if (itemStock == 0)  {
                     // Is there any stock?
                     return;
                 }
