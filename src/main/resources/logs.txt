@@ -1,0 +1,1 @@
+Log files can get quite large, quite quickly! I will eventually make SQL integration to store this data on a database.

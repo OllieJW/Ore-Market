@@ -7,22 +7,25 @@ import me.olliejw.oremarket.commands.Reload;
 import me.olliejw.oremarket.commands.StatsCommands;
 import me.olliejw.oremarket.events.MarketCrash;
 import me.olliejw.oremarket.listeners.InventoryEvents;
+import me.olliejw.oremarket.listeners.PlayerJoin;
 import me.olliejw.oremarket.utils.Placeholders;
 import me.olliejw.oremarket.utils.Stats;
 import me.olliejw.oremarket.utils.Updates;
-import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
@@ -41,6 +44,8 @@ public final class OreMarket extends JavaPlugin implements Listener {
         createGuiConfig();
         createMsgConfig();
         instance = this;
+
+        logToFile("Started OreMarket");
 
         // Spigot and bStats
         new Updates(this, 91015).getVersion(version -> {
@@ -77,6 +82,7 @@ public final class OreMarket extends JavaPlugin implements Listener {
         }));
         // Commands and Events
         this.getServer().getPluginManager().registerEvents(new InventoryEvents(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         Objects.requireNonNull(this.getCommand("openmarket")).setExecutor(new OpenMarket());
         Objects.requireNonNull(this.getCommand("om-reload")).setExecutor(new Reload());
         Objects.requireNonNull(this.getCommand("om-stats")).setExecutor(new StatsCommands());
@@ -172,6 +178,30 @@ public final class OreMarket extends JavaPlugin implements Listener {
     }
     public static Economy getEconomy() {
         return econ;
+    }
+
+    public void logToFile(String string) {
+        try {
+            File dataFolder = getDataFolder();
+            if(!dataFolder.exists()) {
+                dataFolder.mkdir();
+            }
+            File logsFile = new File(getDataFolder(), "logs.txt");
+            if (!logsFile.exists()) {
+                logsFile.createNewFile();
+            }
+
+            SimpleDateFormat formatter = new SimpleDateFormat("[dd/MM/yyyy HH:mm:ss]: ");
+            Date date = new Date(System.currentTimeMillis());
+
+            FileWriter fw = new FileWriter(logsFile, true);
+            PrintWriter pw = new PrintWriter(fw);
+            pw.println(formatter.format(date) + ChatColor.stripColor(string.replaceAll("&", "§")));
+            pw.flush();
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

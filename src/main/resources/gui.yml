@@ -18,6 +18,9 @@ items:
     cost: 1000
     value: 1000
     stock: 100
+    flags:
+      buy-sound: BLOCK_ANVIL_PLACE
+      sell-sound: BLOCK_CHEST_OPEN
   1:
     item: GOLD_INGOT
     name: '&6Gold Ingot'
@@ -53,7 +56,8 @@ items:
       - '&cClose GUI'
     commands:
       - '[close]'
-    hide: true
+    flags:
+      hide: true
 
   6:
     item: PAPER
@@ -62,4 +66,5 @@ items:
       - '&a$[balance]'
     commands:
       - '[msg] Your balance: [balance]'
-    hide: true
+    flags:
+      hide: true
