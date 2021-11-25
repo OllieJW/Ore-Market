@@ -5,7 +5,9 @@ gui:
   rows: 3
 
 items:
-  0:
+
+  # Buyable items
+  '11':
     item: DIAMOND
     name: '&bDiamond Ore'
     lore:
@@ -17,11 +19,11 @@ items:
       - '&7Left-Click to sell'
     cost: 1000
     value: 1000
-    stock: 100
+    stock: 25
     flags:
       buy-sound: BLOCK_ANVIL_PLACE
       sell-sound: BLOCK_CHEST_OPEN
-  1:
+  '12':
     item: GOLD_INGOT
     name: '&6Gold Ingot'
     lore:
@@ -33,9 +35,8 @@ items:
       - '&7Left-Click to sell'
     cost: 500
     value: 500
-    stock: 100
-
-  2:
+    stock: 50
+  '13':
     item: IRON_INGOT
     name: '&7Iron Ore'
     lore:
@@ -48,8 +49,44 @@ items:
     cost: 250
     value: 250
     stock: 100
+  '14':
+    item: NETHERITE_INGOT
+    name: '&dNetherite Ore'
+    lore:
+      - '&aValue: $[value]'
+      - '&aOriginal: $[cost]'
+      - '&aStock: [stock]'
+      - '&aChange: [percent]%'
+      - '&7Right-Click to buy'
+      - '&7Left-Click to sell'
+    cost: 2500
+    value: 2500
+    stock: 10
+  '15':
+    item: EMERALD
+    name: '&aEmerald'
+    lore:
+      - '&aValue: $[value]'
+      - '&aOriginal: $[cost]'
+      - '&aStock: [stock]'
+      - '&aChange: [percent]%'
+      - '&7Right-Click to buy'
+      - '&7Left-Click to sell'
+    cost: 1250
+    value: 1250
+    stock: 15
 
-  5:
+  # Command Items
+  '18':
+    item: PAPER
+    name: '&aBalance'
+    lore:
+      - '&a$[balance]'
+    commands:
+      - '[msg] Your balance: [balance]'
+    flags:
+      hide: true
+  '26':
     item: BARRIER
     name: '&cClose'
     lore:
@@ -59,12 +96,104 @@ items:
     flags:
       hide: true
 
-  6:
-    item: PAPER
-    name: '&aBalance'
-    lore:
-      - '&a$[balance]'
-    commands:
-      - '[msg] Your balance: [balance]'
+  # Style items
+  '9':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '0':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '1':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '2':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '3':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '4':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '5':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '6':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '7':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '8':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '17':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '19':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '20':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '21':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '22':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '23':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '24':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '25':
+    item: RED_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '10':
+    item: GREEN_STAINED_GLASS_PANE
+    name: ' '
+    flags:
+      hide: true
+  '16':
+    item: GREEN_STAINED_GLASS_PANE
+    name: ' '
     flags:
       hide: true

@@ -4,6 +4,10 @@
 
 prefix: '&bOreMarket '
 
+# Logs.txt settings. More soon
+logs:
+  enabled: true
+
 valuemessage:
   enabled: true
   # Time (in minutes) to send this message

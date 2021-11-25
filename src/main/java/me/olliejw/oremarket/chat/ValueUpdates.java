@@ -22,7 +22,7 @@ public class ValueUpdates {
                     assert message != null;
 
                     for (Player player: Bukkit.getOnlinePlayers()) {
-                        if (keySection.getBoolean("hide")) {
+                        if (keySection.getBoolean(".flags.hide")) {
                             return;
                         }
                         player.sendMessage(plh.format(message, player, keySection));

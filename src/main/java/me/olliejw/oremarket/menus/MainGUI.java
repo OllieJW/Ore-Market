@@ -44,7 +44,11 @@ public class MainGUI implements Listener {
             }
 
             // Set values
-            assert name != null;
+            if (name == null) {
+                // If a name is not given, we will make it blank
+                name = " ";
+            }
+
             meta.setDisplayName(plh.format(name, player, keySection));
             meta.setLore(lore);
             item.setItemMeta(meta);

@@ -181,27 +181,28 @@ public final class OreMarket extends JavaPlugin implements Listener {
     }
 
     public void logToFile(String string) {
-        try {
-            File dataFolder = getDataFolder();
-            if(!dataFolder.exists()) {
-                dataFolder.mkdir();
-            }
-            File logsFile = new File(getDataFolder(), "logs.txt");
-            if (!logsFile.exists()) {
-                logsFile.createNewFile();
-            }
+        if (getConfig().getBoolean("logs.enabled"))
+            try {
+                File dataFolder = getDataFolder();
+                if(!dataFolder.exists()) {
+                    dataFolder.mkdir();
+                }
+                File logsFile = new File(getDataFolder(), "logs.txt");
+                if (!logsFile.exists()) {
+                    logsFile.createNewFile();
+                }
 
-            SimpleDateFormat formatter = new SimpleDateFormat("[dd/MM/yyyy HH:mm:ss]: ");
-            Date date = new Date(System.currentTimeMillis());
+                SimpleDateFormat formatter = new SimpleDateFormat("[dd/MM/yyyy HH:mm:ss]: ");
+                Date date = new Date(System.currentTimeMillis());
 
-            FileWriter fw = new FileWriter(logsFile, true);
-            PrintWriter pw = new PrintWriter(fw);
-            pw.println(formatter.format(date) + ChatColor.stripColor(string.replaceAll("&", "§")));
-            pw.flush();
-            pw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                FileWriter fw = new FileWriter(logsFile, true);
+                PrintWriter pw = new PrintWriter(fw);
+                pw.println(formatter.format(date) + ChatColor.stripColor(string.replaceAll("&", "§")));
+                pw.flush();
+                pw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 }
 
