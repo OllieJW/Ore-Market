@@ -35,14 +35,14 @@ public class InventoryEvents implements Listener {
 
         if (previous > 0) {
             if (operation) {
-                OreMarket.getEconomy().withdrawPlayer((OfflinePlayer) player, previous-(total*OreMarket.main().getConfig().getDouble("multiplier")));
+                OreMarket.getEconomy().withdrawPlayer((OfflinePlayer) player, previous));
                 OreMarket.main().getGuiConfig().set("items." + Slot + ".value",
                         previous+(total*OreMarket.main().getConfig().getDouble("multiplier")));
                         // 1000 + (120 x 0.01)
                         // 1000 + 1.12
                         // 1000 -> 1001.12
             } else {
-                OreMarket.getEconomy().depositPlayer((OfflinePlayer) player, previous-(total*OreMarket.main().getConfig().getDouble("multiplier")));
+                OreMarket.getEconomy().depositPlayer((OfflinePlayer) player, total);
                 OreMarket.main().getGuiConfig().set("items." + Slot + ".value",
                         previous-(total*OreMarket.main().getConfig().getDouble("multiplier")));
                         // 1000 - (80 x 0.01)
