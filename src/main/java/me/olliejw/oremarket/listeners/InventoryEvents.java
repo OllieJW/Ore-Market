@@ -21,7 +21,7 @@ import java.util.Objects;
 public class InventoryEvents implements Listener {
     private double calculateTotalWithTax(double price) {
         double tax = OreMarket.main().getConfig().getDouble("tax", 0.0);
-        return price - (tax/100);
+        return price - ((price/100) * tax);
     }
     private void changePlayerBalance(double previous, HumanEntity player, boolean operation, int Slot) { // Buy
         /**
